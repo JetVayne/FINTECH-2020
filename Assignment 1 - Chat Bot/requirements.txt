@@ -1,0 +1,8 @@
+numpy
+fugle-realtime
+websocket-client
+requests
+telegram
+python-telegram-bot
+flask
+

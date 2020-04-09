@@ -129,6 +129,10 @@ class ReplyTool:
     @staticmethod
     def basic_helper(target: str):
         data = intraday.meta(apiToken=ReplyTool.TOKEN, output='raw', symbolId=target)
+        if 'error' in data.keys():
+            msg = '戴夫，台股根本沒這支股票，可不可以查清楚再來?'
+            return msg
+
         industry = data['industryZhTw']
         category = data['typeZhTw']
         ref_price = data['priceReference']

@@ -1,0 +1,4 @@
+pyenchant
+selenium
+pdfminer
+wordninja

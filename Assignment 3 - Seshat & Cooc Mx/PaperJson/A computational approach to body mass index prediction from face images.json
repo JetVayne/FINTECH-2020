@@ -1,0 +1,296 @@
+{
+    "Title": "A computational approach to body mass index prediction from face images",
+    "Author": "Lingyun Wen",
+    "Subject": "IMAVIS",
+    "KeyWords": [
+        "Body mass index (BMI)",
+        "Facial features",
+        "BMI prediction",
+        "Machine vision",
+        "Large database"
+    ],
+    "Outlines": [
+        {
+            "index": 0,
+            "name": "Prologue",
+            "type": "prol",
+            "level": 4,
+            "content": "## A computational approach to body mass index prediction ## from face images☆ ## Lingyun Wen, Guodong Guo⁎ Lane Department of Computer Science and Electrical Engineering, West Virginia University, Morgantown, WV, 26506, United States ## article info abstract Article history: Received 11 June 2012 Received in revised form 9 February 2013 Accepted 24 March 2013 Available online 2 April 2013 Keywords: Body mass index (BMI) Facial features BMI prediction Machine vision Large database Human faces encode plenty of useful information. Recent studies in psychology and human perception have found that facial features have relations to human weight or body mass index (BMI). These studies focus on finding the correlations between facial features and the BMI. Motivated by the recent psychology studies, we develop a computational method to predict the BMI from face images automatically. We formulate the BMI prediction from facial features as a machine vision problem, and evaluate our approach on a large database with more than 14,500 face images. A promising result has been obtained, which demonstrates the feasibility of developing a computational system for BMI prediction from face images at a large scale. © 2013 Elsevier B.V. All rights reserved. ",
+            "detail": ""
+        },
+        {
+            "index": 1,
+            "name": "1. Introduction",
+            "type": "sect",
+            "level": 4,
+            "content": "Human faces contain a number of cues, e.g., identity, emotionalexpression, age, gender, ethnicity, attractiveness, personality traits,and so on. Decoding facial cues has been the subject of speculationfor centuries[1]. It has attracted much attention from psychologists,sociologists, and computer scientists for decoding the useful informa-tion from faces.In this paper, we want to“decode”the information of body massindex (BMI) from single face images. BMI is a measure of body fatbased on body height and weight for an individual. Gallagher et al.[2] showed that BMI is representative of body fatness.BMI is also an important visual characteristic to describe a person.BMI is a widely used measure of adiposity in humans, especially forthe overweight issue. Andrew et al.[3] revealed that BMI is associatedwith the risk of some common adult cancers.To compute an individual's BMI, the traditional method is usuallyto measure both the body weight and height. Thus some tools are re-quired, such as a ruler and a scale.Given an individual's height and weight, the calculation of bodymass index (BMI) is given by[4]: BMI¼weight kgðÞheight mðÞ^2orweight lbðÞ\u0002 703height inðÞ^2 8 >> >< >>> :depending on the units to use, e.g., meter (m) for height and kilogram(kg) for weight, or inch (in) for height and pond (lb) for weight.According to the values of BMI, people are divided into four catego-ries: underweight, normal, overweight, and obese[5]. The BMI cate-gories and the range of values in each category are shown inTable 1. Also,Fig. 1shows some face examples in the different catego-ries according to their BMI values.",
+            "detail": "s0005"
+        },
+        {
+            "index": 2,
+            "name": "1.1. Related work",
+            "type": "sect",
+            "level": 4,
+            "content": "Recent studies in psychology and human perception[6–8] havefound that facial features have relations to human weight or BMI.These studies focus onfinding the related, specific features on faces,and measuring the correlations between facial features and the BMI.Coetzee et al.[6] showed that facial adiposity, or the perception ofweight in the face, can predict perceived health and attractiveness.They recruited 84 Caucasian participants (43 females and 41 males)to capture face photos. The weight, height, and other information,e.g., blood pressure, of all participants were recorded. Then theyrecruited another four groups of people to rate the facial images man-ually. They showed that the rated facial adiposity is related to BMI.Image and Vision Computing 31 (2013) 392– 400☆This paper has been recommended for acceptance by Lijun Yin.⁎Corresponding author. Tel.: +1 304 293 9143.E-mail address:guodong.guo@mail.wvu.edu(G. Guo).0262-8856/$–see front matter © 2013 Elsevier B.V. All rights reserved.[http://dx.doi.org/10.1016/j.imavis.2013.03.](http://dx.doi.org/10.1016/j.imavis.2013.03.)Contents lists available atSciVerse ScienceDirect Image and Vision Computingjournal homepage: http://www.elsevier.com/locate/imavisCoetzee et al.[7] studied three facial features: width to heightratio, perimeter to area ratio, and cheek to jaw width ratio. Theycaptured face photos of 95 Caucasian and 99 African participants.Each facial image was manually delineated by defining 179 featurepoints and aligned according to interpupillary distance using a com-puter software. Pearson's correlations were computed. They showedthat the three facial features were significantly related to BMI inmales, while only width to height ratio and cheek to jaw ratio weresignificantly related to BMI in females.Pham et al.[8] studied correlations between seven facial featuresand BMI, in young and elderly people in Korean. They recruited 911participants in two age groups: twenties and sixties. A well-trainedoperator was asked to manually label the facial features. Then thePearson's correlation coefficients were calculated to assess the associ-ation of facial features to BMI.",
+            "detail": "s0010"
+        },
+        {
+            "index": 3,
+            "name": "1.2. Our approach",
+            "type": "sect",
+            "level": 4,
+            "content": "In addition to the evidence from psychology and human percep-tion [6–8] on the relation between facial features and BMI, we canactually observe intuitively from some face images about a person'sfatness. For example, some face images and the corresponding BMIsare shown inFig. 1.Based on the psychology studies and our intuitive observation (asshown inFig. 1), we believe that it is worth investigating acomputa-tional approachto body mass index prediction from face images.Furthermore, the computational approach can verify the psychologystudy results with a large scale of data. For example, in psychologystudies, usually a small number of face images are used, thus it isnot clear whether the result could held when more faces are tested.Another thing is that the facial features are usually labeled manuallyin psychology studies, which constrains the verification to a smallscale of data. Finally, the psychology studies[6–8] focus on exploringthe correlations between facial features and BMI, but there is noprediction of BMI from face images. In our computational approach,we will perform BMI prediction and evaluate its accuracy on a largedatabase.One advantage of predicting BMI from face images is that, the ap-proach is non-invasive. There is no need to measure an individual'sheight and weight in order to compute his or her BMI. This is a niceproperty for some practical uses, such as in on-line photos or surveil-lance videos of faces, where it is impossible to use traditionalmeasures of weight and height for BMI calculation. Recently, thereare more and more online dating or friend search sites (e.g.,http://http://www.onlinedatingsites.net/), where possibly only face photos areshown for each individual. The automated prediction of BMI fromface photos can be useful to judge bodily attractiveness and health[6–8].",
+            "detail": "s0015"
+        },
+        {
+            "index": 4,
+            "name": "1.3. Organization",
+            "type": "sect",
+            "level": 4,
+            "content": "In the remaining of the paper, wefirst present our computationalapproach to BMI prediction inSection 2, including details on featurecomputation and modeling BMI prediction as a regression problem.Then we introduce the calculation of the Pearson's correlation coeffi-cients between facial features and BMI inSection 3. We present theexperiments on a large scale database for BMI prediction and correla-tion measures inSection 4. Andfinally, we draw conclusions.",
+            "detail": "s0020"
+        },
+        {
+            "index": 5,
+            "name": "2. A computational approach",
+            "type": "sect",
+            "level": 4,
+            "content": "We propose a computational approach for BMI prediction from asingle face image. The whole framework is shown inFig. 2. Basically,weformulate the BMI prediction as a machine vision problem. In thefollowing, we describe all related procedures.",
+            "detail": "s0025"
+        },
+        {
+            "index": 6,
+            "name": "2.1. Face detection, alignment, and fitting",
+            "type": "sect",
+            "level": 4,
+            "content": "For a given face image, thefirst step is to execute face detection[9], and the detection of two eyes using a technique similar to facedetection[9]. The difference is what templates are used for trainingthe AdaBoost classifier. For face detection, the face templates areused, while for eye detection, the templates are replaced with eyes.Then each detected face is normalized based on the detected eyecoordinates. The normalization is basically to perform translation,rotation, and scaling of the faces so as to align all face images intoTable 1BMI categories. People are divided into four categoriesbased on BMI values: underweight, normal, overweightand obese.Category BMI rangeUnderweight b18.Normal 18.5–24.Overweight 25.0–29.Obese >Fig. 1.Some face images with BMI values and categories. Increased facial adiposity can be observed as the BMI increases.the common eye coordinates. These processing steps are important indeveloping a robust computational system.Next, the active shape model (ASM) is used to detect a number offiducial points in each face image. The ASM method was originallyproposed by Cootes et al.[10]. In the ASM model, the principalcomponent analysis (PCA) was applied on the locations of facial com-ponents (e.g., eyes, nose, lips, facial contours, etc.), then ASM waspresented as connected point distributions from a variety of manuallylabeled images with variations such as pose, illumination, and expres-sion changes. Milborrow[11]extends the ASM with a so-calledConstrained Local Model to improve its performance. The ASM canperform well in facial feature extraction[12], structure locating inmedical images[13], and many other applications. An example ofthe ASMfitting on a test face image is shown inFig. 3. Please notethat we apply the ASM model to the normalized face images, ratherthan the original images that may contain various sizes of faces andhead rotations. Letting the ASMfitting work on the normalized faceimages is helpful to make thefiducial point detection more robustand accurate. The detected facial points by the ASM are used as theinput for the next step to compute facial geometry or ratio features.",
+            "detail": "s0030"
+        },
+        {
+            "index": 7,
+            "name": "2.2. Facial features",
+            "type": "sect",
+            "level": 4,
+            "content": "Seven facial features areautomaticallydetected or estimated inour approach. They are cheekbone to jaw width (CJWR), width toupper facial height ratio (WHR), perimeter to area ratio (PAR), eyesize (ES), lower face to face height ratio (LF/FH), face width tolower face height ratio (FW/LFH), and mean of eyebrow height(MEH). The use of these features is motivated by the psychologystudies[7,8]. In our approach, we pursue an automatic detectionand estimation of these features, rather than manual labeling as inpsychology studies[7,8]. An illustration of these facial features isshown inFig. 4. In the following, we describe and interpret these fea-tures, and then introduce how to compute them automatically.",
+            "detail": "s0035"
+        },
+        {
+            "index": 8,
+            "name": "2.2.1. Seven computed features",
+            "type": "sect",
+            "level": 4,
+            "content": "There are seven facial features in total. They are visually shown inFig. 4. The meanings of these features are described below.(1). CJWR is the ratio of the cheekbone width to jaw width. Thecheekbone width is the distance betweenP 1 andP 15 , and jawFig. 2.The proposed framework for body mass index prediction from a face image.Fig. 3.The result of the ASMfitting onfiducial points in a test face image.width is the distance betweenP 4 andP 12. So the CJWR featureis computed byjjP 1 P 15jjP 4 P 12 ;(2). WHR is the ratio of the cheekbone width to upper facial heightwhich is the distance betweenP 67 andN 1. The formula of WHRisjjjjPP 674 PN^121 ;(3). PAR is the ratio of the perimeter to area of polygon runningthrough P 1 P 4 P 8 P 12 P 15 P 1 , so the computation is given byPerimeter(P 1 P 4 P 8 P 12 P 15 P 1 )/Area(P 1 P 4 P 8 P 12 P 15 P 1 ), and the pe-rimeter is computed by the sum of line segment lengths, andthe area is the sum of all related triangles, respectively;(4). ES is the average size of eyes, which is the average distancebetweenP 28 andP 33 minus the distance betweenP 30 andP 35.The formula is^12 ðÞjjP 28 P 33 −jjP 30 P 35 ;(5). LF/FH is the lower face to face height ratio. The lower face is thepart of the face below the cheekbone (i.e., lineP 1 P 15 ). The lowerface height is the distance between the cheekbone and the low-est point in the jaw which is shown inFig. 4as the distance LFH.The face height is the distance between the highest pointN 2and the lowest pointP 8 on the face. The formula isjjjjNLFH 2 P 8 ;(6). FW/LFH is the face width to the lower face height ratio. Theface width is the cheekbone width. So the FW/LFH feature iscomputed byjjP^1 LFHP^15 ;(7). MEH is the average distance between eyebrows and the upperedge of eyes, which is the mean of distances betweenP 22 toP 28 ,N 3 toP 29 ,P 30 toP 25 ,P 19 toP 35 ,N 4 toP 34 , andP 16 toP 33. Thusthe formula will be^16 fjjþP 22 P 28 jjþN 3 P 29 jjþP 25 P 30 jjþP 19 P 35jjN 4 P 34 þjjgP 16 P 33.",
+            "detail": "s0040"
+        },
+        {
+            "index": 9,
+            "name": "2.2.2. Automatic feature computation",
+            "type": "sect",
+            "level": 4,
+            "content": "In order to compute the features automatically, we use the ActiveShape Model (ASM) to detect facialfiducial pointsfirst, and thencompute the distance and ratio features. The recently developedASM technique[14] canfind 76 points in a face image. We used 20points out of 76 to produce the facial features that are related toBMI. Those points are marked asP⁎in Fig. 4(⁎indicates the⁎th pointsin the original list returned by the ASM method). Note that even withthe big number of 76 points detected by the ASM, as shown inFig. 3,there are still some other points that are needed to compute the fea-tures. Actually, another four points are needed but cannot be detectedby the ASM method, denoted byN 1 −N 4 in Fig. 4. We estimate thepositions of these four points based on the detectedfiducial pointsby the ASM method.Specifically,N 1 is estimated by the midpoint ofP 29 andP 34 ,asshown inFig. 4.N 2 is approximated by the intersection point betweenlinesP 28 N 3 andP 33 N 4 .N 3 is estimated by the midpoint ofP 26 andP 27 ,and similarly,N 4 is the midpoint ofP 20 andP 21. We useN 2 as anestimate of the highest point on a face. This estimate is based onour observations and a quantitative evaluation that will be presentedin the next.Given thefittedfiducial points by the ASM method, and the esti-mated points described above, i.e.,N 1 −N 4 , all of the facial geometryand ratio features, introduced inSection 2.2.1, can be computedautomatically. These features are supposed to be correlated to BMI,motivated by the psychology studies[7,8]. We believe that it is asignificant progress to show that the BMI related facial features canbe computedautomaticallyin each face image.",
+            "detail": "s0045"
+        },
+        {
+            "index": 10,
+            "name": "2.3. Normalization",
+            "type": "sect",
+            "level": 4,
+            "content": "After the computation of facial features using the methodspresented above, normalization is executed to get the normalized fea-tures byx′¼x−μσ ;whereμis the mean value andσis the standard deviation, computedfrom the training data along each feature dimension. Since the fea-tures may have different ranges of values, we found that the featurenormalization is important in order to get a better prediction of theBMI. After feature normalization, we perform a statistical learning tobuild the relation between facial features and the BMI.",
+            "detail": "s0050"
+        },
+        {
+            "index": 11,
+            "name": "2.4. Statistical learning",
+            "type": "sect",
+            "level": 4,
+            "content": "Given the computed features in faces, we define the BMI predic-tion from facial features as a statistical learning problem. We proposeto use three regression methods, i.e., the support vector regression(SVR)[15], Gaussian process (GP)[16], and the least squares estima-tion (LSE)[17], and compare their performance in modeling the rela-tions for BMI prediction. We want to mention that, in psychologystudies[6–8], there is no prediction of BMI from facial features.Their studies are mainly the correlation measures between facialfeatures and the BMI.",
+            "detail": "s0055"
+        },
+        {
+            "index": 12,
+            "name": "2.4.1. Support vector regression",
+            "type": "sect",
+            "level": 4,
+            "content": "Given a set of training data (x 1 ,y 1 ),...,(xl,yl)⊂X×R, whereXdenotes the space of the input patterns,X∈Rd, andy 1 ,⋯,ylare thetarget regression values, e.g., BMI values in our case. extitR denotesone-dimensional real values for the BMI. The SVR[15] is to learn afunctionf(x) that has at mostεdeviation from the actually obtainedtargetsyifor all the training data, and at the same time is asflat aspossible. We choseε= 0.002 in our experiments taking the formfxðÞ¼hiw;xþb;where〈⋅,⋅〉denotes the dot product inX. Flatness in this form meansthat one seeks a smallw. One way to ensure this is to minimize thenorm. So this problem can be written as a convex optimizationproblem[18]minimize 1 2jjwjj^2subject toyi−hiw;xi−b≤εhiw;xiþb−yi≤ε \u0002Fig. 4.Illustration of the facial features for BMI prediction.A quadratic programming is usually used to solve the optimizationproblem[18]. The solution of the SVR is thewandb.",
+            "detail": "s0060"
+        },
+        {
+            "index": 13,
+            "name": "2.4.2. Least squares regression",
+            "type": "sect",
+            "level": 4,
+            "content": "Least squares estimation is a traditional method to estimate therelation between two sets of variables. A basic assumption underlyingthe application of the least squares method is that the error terms inthe regression model are independent[17]. Suppose observations are{X,y}. The model isy¼Xβþ\u0002;whereβis a vector of parameters given byβ¼ðÞX′X−^1 X′y;withX′as the transpose ofX.",
+            "detail": "s0065"
+        },
+        {
+            "index": 14,
+            "name": "2.4.3. Gaussian process regression",
+            "type": "sect",
+            "level": 4,
+            "content": "A Gaussian process (GP)[16] is a collection of random variables,anyfinite number of which has a joint Gaussian distribution. Givena set of training data (x 1 ,y 1 ),⋯,(xl,yl)=(X,y), the Bayesian analysisof the standard linear regression model with Gaussian noise is givenbyf(x)=xTw,y=f(x)+ε, wherexis the input vector,wis a vec-tor of weights of the linear model,fis the function value andyis theobserved target value.εis a bias weight or offset. Assuming that theobserved valuesydiffer from the function valuesf(x) by additivenoise, and further assuming that this noise follows an independent,identically distributed Gaussian distribution with zero mean and var-ianceσn^2 , we getε∼N 0 ;σ^2 n \u0003\u0004. In the Bayesian formalism, we have azero mean Gaussian prior with covariance matrix∑pon the weightsw∼N 0 ;∑p \u0003\u0004[16]. To make predictions for a test examplex⁎, the pre-dictive distribution forf⁎≜f(x⁎)atx⁎is given by averaging the outputof all possible linear models with respect to the Gaussian posterior.pf⁎x⁎;X;y \u0005 \u0005 \u0004¼∫pf⁎x⁎;w \u0005 \u0005 \u0004pwXjÞ;ydw¼Nσ^12 nxT⁎A−^1 Xy;xT⁎A−^1 x⁎ \u0006 \u0006 \u0006 \u0006\u0007 ,whereA¼σ^12 nXXTþ∑− 1p. More details can be referred to[16]. Herewe explore the Gaussian process regression for our BMI prediction.The SVR, GP, and LSE methods are classical regression approaches,and have shown good performance in many applications. However, itis thefirst time these methods to the problem of BMI prediction areadapted, to the best of our knowledge. In order to understand thenew problem of BMI prediction deeply, we apply all three methodsand carry on comparisons. We want to investigate how different theperformance of BMI prediction is: a direct regression (LSE) or morerobust regression, e.g., SVR or GP.Before performing the BMI prediction experiments, we presentthe Pearson's correlation measures between facial features and theBMI. We want to understand the correlation on a large database,while the psychology studies[7,8]only use a small number ofsamples, e.g., hundreds, for correlation measures. Statistically, it ismore meaningful to evaluate the correlations on a large database,e.g., more than 10,000 samples.",
+            "detail": "s0070"
+        },
+        {
+            "index": 15,
+            "name": "3. Correlations between facial features and BMI",
+            "type": "sect",
+            "level": 4,
+            "content": "In addition to BMI prediction, we also examine the correlationsbetween facial features and the BMI. In psychology studies[7,8], themajor measure is the Pearson's correlation coefficient, but the corre-lations are usually measured on a small number of samples, since itis difficult to manually label the facial features on a large database.However, in our computational approach, we can measure the corre-lations on a large number of samples, which will show more mean-ingful measures statistically. It can also verify the psychology studyresults[7,8], but on a much larger number of samples.Usually the Pearson's correlation coefficient is used to measurethe correlation between two sets of variables. We will give a briefintroduction of the Pearson's correlation, and then describe the hy-pothesis testing, which is used to test the significance of the obtainedcorrelations between facial features and the BMI. Based on thehypothesis testing, we can draw a conclusion on whether the facialfeatures and the BMI are correlated in the case of a large population.",
+            "detail": "s0075"
+        },
+        {
+            "index": 16,
+            "name": "3.1. Pearson's correlation coefficient",
+            "type": "sect",
+            "level": 4,
+            "content": "Pearson's correlation coefficient is also called Pearson'sr. Pearsondeveloped the mathematical formula in 1895. It focuses on the corre-lation coefficient as a computational index used to measure bivariateassociation. The correlation coefficient constitutes the principal statis-tical methodology for observational experiments in many disciplines[19]. It is calculated byr¼ ∑ni¼ 1 Xi−X \u0003\u0004Yi−Y \u0003\u0004ffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffi∑ni¼ 1 Xi−Xq \u0003\u0004 2 ffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffi∑ni¼ 1 Yi−Yq \u0003\u0004 2 :The Pearson's correlation coefficient is between−1 and 1. Ifrb0,it indicates a negative correlation betweenXandY.Ifr> 0, it indi-cates a positive correlation. Ifr= 0, it indicates there is no correla-tion betweenXandY[20]. If Pearson'sris close to−1 and +1, itindicates a very strong correlation.",
+            "detail": "s0080"
+        },
+        {
+            "index": 17,
+            "name": "3.2. Statistical significance",
+            "type": "sect",
+            "level": 4,
+            "content": "The above Pearson's correlation coefficients are computed fromthe observed samples. Even if we have a large number of samplesfor the correlation measure, it is still not equivalent to the correlationmeasured in the whole population. To extend the correlation measureto the population, we need to do hypothesis testing with a statisticalsignificance measure.In statistics, p-value describes how certain a hypothesis is true.Here we use the p-value to indicate whether a significant correlationexists between the computed facial features and the BMI. The p-valuemeasures the plausibility of the null hypothesis, which is defined asthere is no correlation between facial features and the BMI. The small-er the p-value, the stronger the evidence is against the null hypothe-sis. If the p-value is sufficiently small, the null hypothesis would beabandoned and an alternate hypothesis is believed[21]. Some thresh-old values can be set, e.g., 0.001, 0.01 or 0.05. If the p-value is equal orsmaller than the thresholds, it indicates a significant correlationbetween facial features and the BMI.",
+            "detail": "s0085"
+        },
+        {
+            "index": 18,
+            "name": "4. Experiments",
+            "type": "sect",
+            "level": 4,
+            "content": "Now we perform experimental validations on a large database.Wefirst introduce the database, and then present the BMI predictionresults, and the correlation measures between facial features and theBMI.",
+            "detail": "s0090"
+        },
+        {
+            "index": 19,
+            "name": "4.1. Database",
+            "type": "sect",
+            "level": 4,
+            "content": "The MORPH-II database[22]is used in our research. There areabout 55,000 face images in MORPH-II. Because of the imbalance ofthe age, gender and ethnicity distribution in MORPH-II database,e.g., about 96% face images are the Black and White, but only 4% areHispanic, Asian, Indian, or others, we only used the White and Blackfaces in our study. Also considering the gender and age group distri-butions, we selected part of face images, and divided into two sets:Set1 and Set2. The division into two sets is motivated by the age esti-mation study in[23]. The details about the distribution can be seenfromTable 2. Note that there are 7273 face images in Set1, and7323 face images in Set2. Among these images, there are 4591 identi-ties in Set1, and 4590 identities in Set2. So there are some individualswith more than one face image in either Set1 or Set2. But most ofthem have different ages and different BMI values, because theMORPH database contains age variations for the individuals. So theinfluence of those persons on the whole result of BMI predictionshould be small in our experiments.The number of samples used in our experiments is much largerthan those used in psychology studies[7,8]. We have the groundtruth of weight and height for each individual, thus the true BMIvalues are known for our evaluation. The range and distribution ofthe BMI values in Set1 is shown inFig. 5. The BMI values are mainlyin the range of 15 to 35, which contains all BMI categories: under-weight, normal, overweight and obese, as shown inTable 1. FromFig. 1, we can also get a visual perception of different BMI values inthe faces.",
+            "detail": "s0095"
+        },
+        {
+            "index": 20,
+            "name": "4.2. On facial points",
+            "type": "sect",
+            "level": 4,
+            "content": "Our goal is to perform BMI prediction from face images automati-cally. To achieve the goal, one major step is to detect facial points au-tomatically for feature extraction. In our current approach, most facialpoints can be detected automatically by the ASM method, however,there are some points that cannot be obtained by the ASM. As statedin Section 2.2.1, some facial points are predicted or estimated by theother ASM detected points, rather than by manual labeling. It is notpractical or convenient to ask the users to manually label some facialpoints, especially in test face photos. To have a brief evaluation of ourestimation method for the facial points, especially the highest point ofa face,N 2 , we randomly selected 100 images from our experimentaldatabase—MORPH-II[22], and manually labeled all the neededpoints to produceN 2 and also the real highest point of each face.Then we found the average deviation of our estimate w.r.t. the man-ually labeled positions of the highest points is about 20.19 pixels.While the average face size of the 100 images is about 182 × 230pixels, this deviation is about 8.8% of the face height. We considerthis deviation is small for our automated feature extraction. More-over, the BMI prediction errors are not large (see results in thissection), which indirectly show the feasibility of estimating thepoint location for feature extraction.Next, we present the experimental results, including both correla-tion measures and the BMI prediction performance analysis.",
+            "detail": "s0100"
+        },
+        {
+            "index": 21,
+            "name": "4.3. Correlations between facial features and BMI",
+            "type": "sect",
+            "level": 4,
+            "content": "The correlations between facial features and the BMI are measuredand shown inTable 3. One can see that all of the correlations aresignificant based on the extremely small p-values in both data sets.This indicates that the extracted facial features are correlated to theBMI statistically.Then we investigate the correlations between facial features andthe BMI along with the age, gender, and ethnicity. We use thedata in Set1 for this investigation. The results are shown inTables 4and 5. In these tables, p-value = 0.0000 indicates a very smallp-value, which is less than 0.00005.In the following discussion, we consider correlation with p-value≤0.05 as a significant correlation. Smaller CJWR and larger WHR indi-cate a wider and squarer face[8]. Smaller PAR indicates more roundlow face which also means a wider and squarer face. Smaller ES indi-cates smaller eyes. Smaller LF/FH indicates smaller rate betweenlower face to whole face length. Larger FW/LFH also indicates awider face. Since usually, the height of people's face is larger thanthe width, we consider a wider face as a squarer face.Table 4shows the correlations between the facial features and theBMI in six age groups. We can observe the tendency between the fa-cial features and the BMI in different groups. In the age10 group, aperson with a squarer face (CJWR, WHR, PAR, and FW/LFH) andsmaller eyes (ES) has a larger BMI. In the age20 group, a personwith a squarer face (CJWR, WHR, PAR, and FW/LFH), smaller eyes(ES), smaller rate between lower face to whole face length (LF/FH),larger eyebrow height (MEH) has larger BMI. In the age30 group, aperson with a squarer face (CJWR, WHR, PAR, and FW/LFH), smallerrate between lower face to whole face length (LF/FH), and smallereyes (ES) has larger BMI. In the age40 group, a person with a squarerface (CJWR, WHR, PAR, and FW/LFH), smaller rate between lower faceto whole face length (LF/FH), smaller eyes (ES), and larger eyebrowheight (MEH) has bigger BMI. In the age50 group, a person with asquarer face (CJWR, WHR, and FW/LFH) has larger BMI. There is nofeature indicating significant correlations with BMI in the agegroup. This may be caused by the insufficient number of samplesTable 2The selected data of Set1 and Set2. There are 4 gender and ethnicity groups in both Setand Set2: Black female, Black male, White female, and White male. They are also corre-sponding to six age groups: age10s (b20), age20s (20–29), age30s (30–39), age40s(40–49), age50s (50–59) and age60s (≥60).Set1 SetBlack female 908 902Black male 2642 2692White female 1006 1022White male 2717 2707Age10s 992 993Age20s 2687 2692Age30s 1901 1901Age40s 1243 1251Age50s 413 455Age60s 24 2010 15 20 25 30 35 40 45 5002004006008001000120014001600Set BMINumber of PeopleFig. 5.The distribution of BMI values on a large database (in Set1). The BMI values spana wide range with most of the values between 15 and 35. The distribution and BMIrange are similar in Set2 and are not shown here.Table 3Pearson's correlation coefficientrbetween facial features and BMI on Set1 and Set2,and the corresponding p-values.Set1 Setr p-value r p-valueCJWR −0.20 0.0000 −0.20 0.WHR 0.25 0.0000 0.28 0.PAR −0.07 0.0000 −0.04 0.ES −0.10 0.0000 −0.11 0.LF/FH −0.07 0.0000 −0.09 0.FW/LFH 0.15 0.0000 0.19 0.MEH 0.04 0.0002 0.05 0.used in this age group. So it is important to use a large number ofsamples for analysis.Table 5shows the correlations between facial features and BMI infour gender–ethnicity groups. In the White female group, a personwith a squarer face (CJWR, WHR, PAR, and FW/LFH) has larger BMI.In the White male group, a person with a squarer face (CJWR, WHR,PAR, and FW/LFH), smaller eye size (ES) has larger BMI. In the Blackfemale group, a person with a squarer face (CJWR, WHR, PAR, andFW/LFH), larger eyebrow height (MEH) has larger BMI. In the Blackmale group, a person with a squarer face (CJWR, WHR, PAR, andFW/LFH), smaller eyes (ES) has larger BMI.A comparison between the correlation measures in our work andthe psychology study results is given inTable 6. Our results have sim-ilar correlations with those in[8,7], except the ES. Maybe that is be-cause in[8], the participants are the Korean people, different fromthe ethnicity groups in our database.Overall, the correlation measures on our database show that mostof the facial features are related to the BMI, although some correla-tions exist with different results for different age, gender, or ethnicitygroups. Based on this, we use the facial features to predict the BMI,which will be presented next.",
+            "detail": "s0105"
+        },
+        {
+            "index": 22,
+            "name": "4.4. BMI prediction from faces",
+            "type": "sect",
+            "level": 4,
+            "content": "We propose to measure the performance of BMI prediction by themean absolute error (MAE). The MAE is defined as the average of theabsolute errors between the estimated BMIs and the ground truthBMIs. MAE¼^1 N∑Nk¼ 1 b^k−bk \u0005\u0005 \u0005 \u0005\u0005\u0005, wherebkis the ground truth BMI forthe test imagek,^bkis the estimated BMI for imagek, andNis thetotal number of test images. This measure is motivated by that usedin age estimation, e.g.,[24].Table 7shows the MAEs of BMI prediction using the regressionmethods, SVR (with the RBF kernel), GP, and LSE. InTable 7, theMAEs are shown in different age groups. We used the Set1 for train-ing, while Set2 for testing, or vice versa. The MAEs of BMI is amonga range of 3.00 ± 1.00. This indicates that the error of the BMI predic-tion is relatively small, comparing to the wide range of BMI from 15 to35, visually shown inFig. 5. As shown inTable 7, the MAEs are slightlydifferent between different groups. For example, the age10 group hasa smaller MAE than other age groups.Fig. 6shows the MAEs in the whole Set1 or Set2. The left showsthe MAEs when training in Set2 while testing in Set1. The rightshows the MAEs when training in Set1 while testing in Set2. Fromthisfigure, we can observe that overall the SVR method performs bet-ter than both the GP and LSE methods.Fig. 7shows the MAEs of SVR, GP and LSE in different BMI catego-ries: underweight, normal, overweight, and obese. We can see that allthe three methods perform well in the normal and overweight BMIcategories. In the normal BMI categories, the MAE of SVR is only1.91. As shown inTable 8, the normal BMI category contains about55% of the faces. The overweight category contains about 30%. Thesetwo categories possess about 85% of the whole set. As shown inFig. 7, in the normal BMI category, the MAE of SVR is the smallest.In the overweight category, the MAE of GP is the smallest. As a result,we can get a higher accuracy in predicting the BMI according to facialfeatures in these two categories. The lower accuracies in another twocategories, i.e., underweight and obese, are probably because of thesmaller number of samples for both training and testing, as shownin Table 8. The result suggests that a large number of training exam-ples are needed in order to have a better BMI prediction performance.Even though the SVR, GP and LSE have similar MAE results, theSVR is better for the underweight and normal BMI categories, whilethe GP performs better for overweight and obese BMI categories.Overall the SVR has the smallest errors as shown inFig. 6.",
+            "detail": "s0110"
+        },
+        {
+            "index": 23,
+            "name": "4.5. Other features",
+            "type": "sect",
+            "level": 4,
+            "content": "In our study, the facial features that we used are motivated by theobservations in psychology and human perception studies[6–8]. Onemay argue that probably some other features could be used too. Onepossible choice is the ASM shape feature[10], which is popular forfacial shape analysis and face recognition. To get an understandingon this, we use the ASM feature for facial feature characterizationfor BMI prediction, using the SVR for regression. Experimentally, wefound that the MAE of the ASM shape feature is 3.34, based on theaverage of Set1 to Set2 and Set2 to Set1. This MAE is slightly higherthan the 3.14 for the seven features that we used and motivated byTable 4Pearson'srbetween facial features and the BMI in age groups (in Set1).Age10s Age20s Age30s Age40s Age50s Age60sr p-value r p-value r p-value R p-value r p-value r p-valueCJWR −0.16 0.0000 −0.21 0.0000 −0.21 0.0000 −0.21 0.0000 −0.11 0.0213 −0.22 0.WHR 0.27 0.0000 0.24 0.0000 0.27 0.0000 0.26 0.0000 0.23 0.0000 0.16 0.PAR −0.10 0.0013 −0.10 0.0000 −0.08 0.0002 −0.07 0.0163 0.07 0.1631 −0.09 0.ES −0.09 0.0050 −0.07 0.0001 −0.09 0.0000 −0.10 0.0003 −0.08 0.1249 0.06 0.LF/FH −0.05 0.0956 −0.10 0.0000 −0.08 0.0007 −0.10 0.0005 −0.04 0.4727 −0.20 0.FW/LFH 0.19 0.0000 0.15 0.0000 0.16 0.0000 0.11 0.0000 0.24 0.0000 0.06 0.MEH 0.05 0.0981 0.09 0.0000 0.04 0.1012 0.07 0.0139 −0.10 0.0598 0.15 0.Table 5Pearson's correlation coefficientrbetween facial features and the BMI in gender–ethnicity groups (in Set1).White female White male Black female Black maleR p-value r p-value r p-value R p-valueCJWR −0.25 0.0000 −0.19 0.0000 −0.26 0.0000 −0.14 0.WHR 0.21 0.0000 0.25 0.0000 0.30 0.0000 0.20 0.PAR −0.19 0.0000 −0.07 0.0006 −0.22 0.0000 −0.06 0.ES 0.01 0.7500 −0.10 0.0000 0.04 0.1900 −0.05 0.LF/FH −0.03 0.4200 −0.02 0.2000 −0.06 0.0600 −0.03 0.FW/LFH 0.13 0.0001 0.22 0.0000 0.14 0.0000 0.15 0.MEH −0.00 1.0000 −0.03 0.1200 0.07 0.0400 −0.01 0.Table 6Correlations between facial features and BMI: A comparison. The age20s group is se-lected to show, since this age group appeared in[7,8]. An empty cell means no resultavailable, and“#”indicates the corresponding p-value > 0.05.Coetzz et al.[7] Pham et al.[8] Our workMale Female Male Female Male Female(n= 187) (n= 194) (n= 230) (n= 229) (n= 1973) (n= 714)PAR −0.22 −0.12# −0.30 −0.23 −0.16 −0.WHR 0.17 0.36 0.30 0.28 0.29 0.CJWR −0.20 −0.29 −0.40 −0.29 −0.24 −0.ES 0.29 0.26 −0.07# −0.05LF/FH 0.12# 0.10# −0.02# −0.02FW/LF 0.12# 0.05# 0.20 0.MEH 0.05# 0.16 −0.04# 0.01the human perception studies[6–8]. This comparison shows that thefeatures that we used are capable of characterizing the facial propertybetter than the ASM features for BMI prediction. Our interpretation isthat the ASM shape parameters characterize the generic shape fea-tures and pertain to the individual's shape, and thus may not deliverthe“salient features”pertaining to the BMI prediction.Based on our exploration, it may inspire some future investiga-tions to develop more discriminative features that can characterizeand predict the BMI with a better performance.",
+            "detail": "s0115"
+        },
+        {
+            "index": 24,
+            "name": "4.6. BMI prediction in separate gender and ethnicity groups",
+            "type": "sect",
+            "level": 4,
+            "content": "Finally, we study the BMI prediction performance when it is exe-cuted in separate gender and ethnicity groups. In this study, the train-ing and test faces come from the same gender and ethnicity groups.The same group in Set1 is used for training, and the data in Set2 isused for testing, and vice versa. Since the SVR method performs thebest overall, we use the SVR for this experiment. The results areshown inTable 9. For comparison, we also show the BMI predictionresults using mixed training data, i.e., without separation of the fourgroups in training, inTable 10.FromTables 9 and 10, we can observe that the MAE differences aresmall between the separated training and mixed training, althoughthe MAE can be reduced in some cases, when the separated trainingis executed. So there is no need to perform a separate training forBMI prediction based on our current experiments. Note that inorder to do the BMI computation in separated groups, the genderand ethnicity information has to be recognizedfirst, which is beyondthe scope of this paper.FromTables 9 and 10, we can also observe that the BMI predictionerrors are different for different groups of people. For example, theMAEs for the male are small, while the errors for the female arelarge. This result suggests that our computational BMI prediction ismore accurate for males than for females.",
+            "detail": "s0120"
+        },
+        {
+            "index": 25,
+            "name": "5. Concluding remarks",
+            "type": "sect",
+            "level": 4,
+            "content": "We have developed an automated, computational system for bodymass index prediction from face images. It is motivated by the recentTable 7The BMI prediction errors measured by the mean absolute error (MAE) on a large da-tabase. The results are presented based on age groups and in total average.“Set1 Set2”means the data in Set1 is used for training, while Set2 is used for testing.Three different regression methods, SVR, GP, and LSE, are used to learn the BMI predic-tion function.Set1 Set2 Set2 SetSVR LSE GP SVR LSE GPAge10s 2.79 3.01 3.02 2.64 2.90 2.Age20s 3.03 3.11 3.15 3.08 3.19 3.Age30s 3.47 3.44 3.47 3.42 3.42 3.Age40s 3.13 3.17 3.21 3.20 3.21 3.Age50s 3.24 3.41 3.26 3.21 3.22 3.Age60s 2.52 2.23 2.23 2.66 2.75 2.Avg. 3.14 3.21 3.23 3.14 3.22 3.Fig. 6.Visualization of the MAEs of SVR, GP and LSE in total average. Left: Set1 Set2;Right: Set2 Set1. Overall, the SVR gives the smallest errors among the three methods.Fig. 7.Visualization of the MAEs of SVR, GP, and LSE in different BMI categories. TheSVR has the lowest errors for underweight and normal, while the GP has the smallesterrors for overweight and obese categories.Table 8This table shows the number of face images in four BMI categories. The normal BMI cat-egory contains the most number of faces, which is about 55% of the whole set. Over-weight category is the second largest, which contains about 30% of faces.Set1 SetUnderweight 308 303Normal 4007 4042Overweight 2096 2093Obese 838 862Table 9The BMI prediction errors (measured by the MAE) based on separated training in eachof the four groups, using the SVR method.Set1 Set2 Set2 SetBlack female 4.18 3.Black male 3.07 3.White female 3.44 3.White male 2.69 2.Average 3.13 3.Table 10The BMI prediction errors (measured by the MAE) based on the SVR method usingmixed training (without gender and ethnicity separation). The results are presentedfor the four groups separately.Set1 Set2 Set2 SetBlack female 4.29 3.Black male 3.05 3.White female 3.64 3.White male 2.65 2.Average 3.14 3.studies in psychology and human perception. It also validates the psy-chology study results on a large database with more than 14,500 faceimages. The correlation coefficients and p-value measures in the largedatabase demonstrate the correlations between the computed facialfeatures and the BMI in a statistically meaningful manner. We haveshown that a computational approach can be developed for BMIprediction using machine vision and statistical learning techniques.Our developed system is probably thefirst computational approachto predict BMI from face images automatically.In future work, we will explore more facial features for BMI pre-diction, and study age, gender, or ethnicity group-specific featuresto better characterize the facial appearance for the purpose of BMIprediction.",
+            "detail": "s0125"
+        },
+        {
+            "index": 26,
+            "name": "Acknowledgment",
+            "type": "ack",
+            "level": 1,
+            "content": "The authors would like to thank K. Ricanek for providing theMORPH database for this study. The work is partially supported byan NSF CITeR grant and an NIJ grant 2010-DD-BX-0161. The authorsare grateful to the anonymous reviewers for their detailed commentsand suggestions to improve the paper.",
+            "detail": "section26"
+        },
+        {
+            "index": 27,
+            "name": "References",
+            "type": "ref",
+            "level": 3,
+            "content": [
+                "[1] L. Zebrowitz, Finally, facesfind favor, Soc. Cogn. 24 (5) (2006) 657–701.",
+                "[2] D. Gallagher, M. Visser, D. Sepulveda, R. Pierson, T. Harris, S. Heymsfield, How",
+                "useful is body mass index for comparison of body fatness across age, sex, and",
+                "ethnic groups? Am. J. Epidemiol. 143 (3) (1996) 228–239.",
+                "[3] A.G. Renehan, M. Tyson, M. Egger, R.F. Heller, M. Zwahlen, Body-mass index and",
+                "incidence of cancer: a systematic review and meta-analysis of prospective",
+                "observational studies, Lancet 2008 (371) (2008) 536–546.",
+                "[4] A. Keys, F. Fidanza, M.J. Karvonen, N. Kimura, H.L. Taylor, Indices of relative",
+                "weight and obesity, J. Chron. Dis. 25 (6–7) (1972) 329–343.",
+                "[5] N. Sebire, M. Jolly, J. Harris, J. Wadsworth, M. Joffe, R. Beard, L. Regan, S. Robinson,",
+                "Maternal obesity and pregnancy outcome: a study of 287,213 pregnancies in",
+                "London, Int. J. Obes. 25 (8) (2001) 1175–1182.",
+                "[6] V. Coetzee, D.I. Perrett, L.D. Stephen, Facial adiposity: a cue to health? Perception",
+                "38 (2009) 1700–1711.",
+                "[7] V. Coetzee, D.I. Perrett, L.D. Stephen, Deciphering faces: quantifiable visual cues to",
+                "weight, Perception 39 (2010) 51–61.",
+                "[8] P. Duong Duc, D. Jun-Hyeong, K. Boncho, L. Hae Jung, K. Honggie, K. Jong Yeol,",
+                "Body mass index and facial cues in sasang typology for young and elderly",
+                "persons, Evidence-Based Complementary and Alternative Medicine, 2011.",
+                "[9] P. Viola, M. Jones, Rapid object detection using a boosted cascade of simple, Proc.",
+                "IEEE CVPR, 2001.",
+                "[10] T.F. Cootes, C.J. Taylor, D.H. Cooper, J. Graham, et al., Active shape models—their",
+                "training and application, Comput. Vis. Image Underst. 61 (1) (1995) 38–59.",
+                "[11] S. Milborrow, F. Nicolls, Locating facial features with an extended active shape",
+                "model, Europe Conf. Computer Vision, 2008, pp. 504–513.",
+                "[12] M.H. Mahoor, M. Abdel-Mottaleb, Facial features extraction in color images using",
+                "enhanced active shape model, International Conference on Automatic Face and",
+                "Gesture Recognition, 2006, pp. 5–11.",
+                "[13] T.F. Cootes, A. Hill, C.J. Taylor, J. Haslam, Use of active shape models for locating",
+                "structures in medical images, Image Vis. Comput. 12 (6) (1994) 355–365.",
+                "[14] S. Milborrow, Locating facial features with active shape models, Ph.D. thesis,",
+                "Faculty of Engineering, University of Cape Town (2007).",
+                "[15] V.N. Vapnik, Statistical Learning Theory, John Wiley, New York, 1998.",
+                "[16] C. Rasmussen, C. Williams, Gaussian Processes for Machine Learning, vol. 1, MIT",
+                "Press, Cambridge, MA, 2006.",
+                "[17] J. Durbin, G.S. Watson, Testing for serial correlation in least square: I, Biometrika",
+                "37 (3/4) (1950) 409–428.",
+                "[18] A. Smola, B. Schölkopf, A tutorial on support vector regression, Stat. Comput. 14",
+                "(2004) 199–222.",
+                "[19] J.L. Rodgers, W.A. Nicewander, Thirteen ways to look at the correlation coeffi-",
+                "cient, Am. Stat. 42 (1) (1988) 59–66.",
+                "[20] R. Wilcox, Fundamentals of Modern Statistical Methods Substantially Improving",
+                "Power and Accuracy, Springer, 2010.",
+                "[21] W. Navidi, Statistics for Engineers and Scientists, 2nd ed. McGraw-Hill, 2008.",
+                "[22] K. Ricanek, T. Tesafaye, Morph: a longitudinal image database of normal adult",
+                "age-progression, IEEE Conf. on AFGR, 2006, pp. 341–345.",
+                "[23] G.-D. Guo, G. Mu, Human age estimation: what is the influence across race and",
+                "gender? IEEE International Workshop on Analysis and Modeling of Faces and",
+                "Gestures, 2010.",
+                "[24] G.-D. Guo, G. Mu, Y. Fu, T.S. Huang, Human age estimation using bio-inspired",
+                "features, IEEE Conference on Computer Vision and, Pattern Recognition, 2009,",
+                "pp. 112–119."
+            ],
+            "detail": "section27"
+        }
+    ],
+    "Text": "Prologue\n\n1. Introduction\n\n1.1. Related work\n\n1.2. Our approach\n\n1.3. Organization\n\n2. A computational approach\n\n2.1. Face detection, alignment, and fitting\n\n2.2. Facial features\n\n2.2.1. Seven computed features\n\n2.2.2. Automatic feature computation\n\n2.3. Normalization\n\n2.4. Statistical learning\n\n2.4.1. Support vector regression\n\n2.4.2. Least squares regression\n\n2.4.3. Gaussian process regression\n\n3. Correlations between facial features and BMI\n\n3.1. Pearson's correlation coefficient\n\n3.2. Statistical significance\n\n4. Experiments\n\n4.1. Database\n\n4.2. On facial points\n\n4.3. Correlations between facial features and BMI\n\n4.4. BMI prediction from faces\n\n4.5. Other features\n\n4.6. BMI prediction in separate gender and ethnicity groups\n\n5. Concluding remarks\n\nAcknowledgment\n\nReferences\n\n[1] L. Zebrowitz, Finally, facesfind favor, Soc. Cogn. 24 (5) (2006) 657–701.\n[2] D. Gallagher, M. Visser, D. Sepulveda, R. Pierson, T. Harris, S. Heymsfield, How\nuseful is body mass index for comparison of body fatness across age, sex, and\nethnic groups? Am. J. Epidemiol. 143 (3) (1996) 228–239.\n[3] A.G. Renehan, M. Tyson, M. Egger, R.F. Heller, M. Zwahlen, Body-mass index and\nincidence of cancer: a systematic review and meta-analysis of prospective\nobservational studies, Lancet 2008 (371) (2008) 536–546.\n[4] A. Keys, F. Fidanza, M.J. Karvonen, N. Kimura, H.L. Taylor, Indices of relative\nweight and obesity, J. Chron. Dis. 25 (6–7) (1972) 329–343.\n[5] N. Sebire, M. Jolly, J. Harris, J. Wadsworth, M. Joffe, R. Beard, L. Regan, S. Robinson,\nMaternal obesity and pregnancy outcome: a study of 287,213 pregnancies in\nLondon, Int. J. Obes. 25 (8) (2001) 1175–1182.\n[6] V. Coetzee, D.I. Perrett, L.D. Stephen, Facial adiposity: a cue to health? Perception\n38 (2009) 1700–1711.\n[7] V. Coetzee, D.I. Perrett, L.D. Stephen, Deciphering faces: quantifiable visual cues to\nweight, Perception 39 (2010) 51–61.\n[8] P. Duong Duc, D. Jun-Hyeong, K. Boncho, L. Hae Jung, K. Honggie, K. Jong Yeol,\nBody mass index and facial cues in sasang typology for young and elderly\npersons, Evidence-Based Complementary and Alternative Medicine, 2011.\n[9] P. Viola, M. Jones, Rapid object detection using a boosted cascade of simple, Proc.\nIEEE CVPR, 2001.\n[10] T.F. Cootes, C.J. Taylor, D.H. Cooper, J. Graham, et al., Active shape models—their\ntraining and application, Comput. Vis. Image Underst. 61 (1) (1995) 38–59.\n[11] S. Milborrow, F. Nicolls, Locating facial features with an extended active shape\nmodel, Europe Conf. Computer Vision, 2008, pp. 504–513.\n[12] M.H. Mahoor, M. Abdel-Mottaleb, Facial features extraction in color images using\nenhanced active shape model, International Conference on Automatic Face and\nGesture Recognition, 2006, pp. 5–11.\n[13] T.F. Cootes, A. Hill, C.J. Taylor, J. Haslam, Use of active shape models for locating\nstructures in medical images, Image Vis. Comput. 12 (6) (1994) 355–365.\n[14] S. Milborrow, Locating facial features with active shape models, Ph.D. thesis,\nFaculty of Engineering, University of Cape Town (2007).\n[15] V.N. Vapnik, Statistical Learning Theory, John Wiley, New York, 1998.\n[16] C. Rasmussen, C. Williams, Gaussian Processes for Machine Learning, vol. 1, MIT\nPress, Cambridge, MA, 2006.\n[17] J. Durbin, G.S. Watson, Testing for serial correlation in least square: I, Biometrika\n37 (3/4) (1950) 409–428.\n[18] A. Smola, B. Schölkopf, A tutorial on support vector regression, Stat. Comput. 14\n(2004) 199–222.\n[19] J.L. Rodgers, W.A. Nicewander, Thirteen ways to look at the correlation coeffi-\ncient, Am. Stat. 42 (1) (1988) 59–66.\n[20] R. Wilcox, Fundamentals of Modern Statistical Methods Substantially Improving\nPower and Accuracy, Springer, 2010.\n[21] W. Navidi, Statistics for Engineers and Scientists, 2nd ed. McGraw-Hill, 2008.\n[22] K. Ricanek, T. Tesafaye, Morph: a longitudinal image database of normal adult\nage-progression, IEEE Conf. on AFGR, 2006, pp. 341–345.\n[23] G.-D. Guo, G. Mu, Human age estimation: what is the influence across race and\ngender? IEEE International Workshop on Analysis and Modeling of Faces and\nGestures, 2010.\n[24] G.-D. Guo, G. Mu, Y. Fu, T.S. Huang, Human age estimation using bio-inspired\nfeatures, IEEE Conference on Computer Vision and, Pattern Recognition, 2009,\npp. 112–119.\n",
+    "Date": "2013-04-20",
+    "HasInfo": true,
+    "HasOLF": true,
+    "ForceSplit": false
+}

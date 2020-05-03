@@ -15,7 +15,7 @@ Get Pdf Object > Covert to MarkDown Structure > Extract Outline > Parse to JSON 
 - pip3 install -r requirements.txt
 
 ### How to Use
-Be ware you are at the same dir of seshat.py
+Beware you are at the same dir of seshat.py
 ```python=3.7
 from seshat import Seshat
 
